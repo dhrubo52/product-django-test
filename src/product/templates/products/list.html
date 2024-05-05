@@ -9,15 +9,23 @@
     </div>
 
     <div class="card">
-        <form action="" method="get" class="card-header">
+        <form action="{% url 'product:list.product' page=1 %}" method="get" class="card-header">
             <div class="form-row justify-content-between">
                 <div class="col-md-2">
-                    <input type="text" name="title" placeholder="Product Title" class="form-control">
+                    <input id="title" type="text" name="title" placeholder="Product Title" class="form-control">
                 </div>
                 <div class="col-md-2">
-                    <select name="variant" id="" class="form-control">
-                        <option selected disabled>--Select A Variant--</option>
-
+                    <select name="variant" id="select-variant" class="form-control">
+                        <option></option>
+                        {% for v in variant %}
+                            <optgroup label="{{v.variant__title}}">
+                                {% for pv in product_variant %}
+                                    {% if v.variant__title == pv.variant__title %}
+                                        <option>{{pv.variant_title}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -26,13 +34,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Price Range</span>
                         </div>
-                        <input type="text" name="price_from" aria-label="First name" placeholder="From"
+                        <input id="price_from" type="text" name="price_from" aria-label="First name" placeholder="From"
                                class="form-control">
-                        <input type="text" name="price_to" aria-label="Last name" placeholder="To" class="form-control">
+                        <input id="price_to" type="text" name="price_to" aria-label="Last name" placeholder="To" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="date" name="date" placeholder="Date" class="form-control">
+                    <input id="date" type="date" name="date" placeholder="Date" class="form-control">
                 </div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-primary float-right"><i class="fa fa-search"></i></button>
@@ -95,10 +103,16 @@
         <div class="card-footer">
             <div class="row justify-content-between">
                 <div class="col-md-6">
-                    <p>Showing 1 to 10 out of 100</p>
+                    <p>Showing {{first}} to {{last}} out of {{count}}</p>
                 </div>
                 <div class="col-md-2">
-
+                    {% for i in page_range %}
+                        {% if is_filter %}
+                            <span><a href="{% url 'product:list.product' page=i %}?title={{filter_title}}&variant={{filter_variant}}&price_from={{filter_price_from}}&price_to={{filter_price_to}}&date={{filter_date}}">{{i}}</a></span>
+                        {% else %}
+                            <span><a href="{% url 'product:list.product' page=i %}">{{i}}</a></span>    
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -14,6 +14,5 @@ urlpatterns = [
 
     # Products URLs
     path('create/', CreateProductView.as_view(), name='create.product'),
-    # path('list/', TemplateView.as_view(template_name='products/list.html', extra_context={'product': True}), name='list.product'),
-    path('list/', ListProductView.as_view(), name='list.product')
+    path('list/<int:page>/', ListProductView.as_view(), name='list.product')
 ]
