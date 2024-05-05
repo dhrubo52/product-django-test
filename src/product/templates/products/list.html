@@ -8,7 +8,6 @@
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
     </div>
 
-
     <div class="card">
         <form action="" method="get" class="card-header">
             <div class="form-row justify-content-between">
@@ -55,58 +54,37 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>T-Shirt <br> Created at : 25-Aug-2020</td>
-                        <td>Quality product in low cost</td>
-                        <td>
-                            <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
-                                <dt class="col-sm-3 pb-0">
-                                    XL/ Black/ Full
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    XL/ Black/ Half
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    L/ Black/ Full
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    L/ Black/ Half
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                            <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more
-                            </button>
-                        </td>
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <a href="" class="btn btn-success">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
+                    {% for key, list in product_variant_price.items %}
+                        
+                        <tr>
+                            <td>{{ list.0.product.id }}</td>
+                            <td>{{ list.0.product.title }} <br> Created at : {{ list.0.product.created_at }}</td>
+                            <td>{{ list.0.product.description }}</td>
+                            <td>
+                                <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant-{{key}}">
+                                    {% for pvp in list %}
+                                        <dt class="col-sm-3 pb-0">
+                                            {{pvp.product_variant_one.variant_title}} / {{pvp.product_variant_two.variant_title}} / {{pvp.product_variant_three.variant_title}}
+                                        </dt>
+                                        <dd class="col-sm-9">
+                                            <dl class="row mb-0">
+                                                <dd class="col-sm-4 pb-0">Price : {{pvp.price}}</dd>
+                                                <dd class="col-sm-8 pb-0">InStock : {{pvp.stock}}</dd>
+                                            </dl>
+                                        </dd>
+                                        
+                                    {% endfor %}
+                                </dl>
+                                <button onclick="$('#variant-{{key}}').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more
+                                </button>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="" class="btn btn-success">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
 
                 </table>

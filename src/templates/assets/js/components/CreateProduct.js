@@ -78,6 +78,7 @@ const CreateProduct = (props) => {
     let saveProduct = (event) => {
         event.preventDefault();
         // TODO : write your code here to save the product
+        console.log(productVariants);
     }
 
 
